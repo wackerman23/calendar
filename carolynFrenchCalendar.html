@@ -63,6 +63,10 @@
 
     function displayRawEvents(events) {
       console.log(events); // Log the raw events for debugging
+
+      // Sort events by start time
+      events.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+
       const eventsList = document.getElementById('events');
       eventsList.innerHTML = ''; // Clear existing events
 
