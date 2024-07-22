@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Today's Google Calendar Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    h1, h2, h3 {
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .caregiver {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #007BFF;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .event-time {
+      font-style: italic;
+      color: #555;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .checklist-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .checklist-item label {
+      margin: 0;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    async function fetchEvents() {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzxH_Zcpe6rc6lRipPLLuzHEGYo-KhT1pYWcDrownQuOCdDa1C1Cfb3wSBncph_QtoUQQ/exec');
+      const events = await response.json();
+      displayRawEvents(events);
+    }
+
+    function displayRawEvents(events) {
+      console.log(events); // Log the raw events for debugging
+      const eventsList = document.getElementById('events');
+      eventsList.innerHTML = ''; // Clear existing events
+
+      const caregiversList = document.getElementById('caregivers');
+      caregiversList.innerHTML = ''; // Clear existing caregivers
+
+      const mealsList = document.getElementById('meals');
+      mealsList.innerHTML = ''; // Clear existing meals
+
+      // Add Lunch and Dinner
+      const lunchLi = document.createElement('li');
+      lunchLi.innerHTML = `<span class="event-title">Lunch</span> <span class="event-time">(12:30 PM)</span>`;
+      mealsList.appendChild(lunchLi);
+
+      const dinnerLi = document.createElement('li');
+      dinnerLi.innerHTML = `<span class="event-title">Dinner</span> <span class="event-time">(6:00 PM)</span>`;
+      mealsList.appendChild(dinnerLi);
+
+      if (events.length > 0) {
+        events.forEach(event => {
+          const startTime = new Date(event.startTime).toLocaleTimeString();
+          const endTime = new Date(event.endTime).toLocaleTimeString();
+          if (event.title.startsWith('Caregiver:')) {
+            const caregiverName = event.title.split('Caregiver:')[1].trim();
+            const caregiverLi = document.createElement('li');
+            caregiverLi.className = 'caregiver';
+            caregiverLi.textContent = caregiverName; // Display only the caregiver's name
+            caregiversList.appendChild(caregiverLi);
+          } else {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="event-title">${event.title}</span> <span class="event-time">(${startTime} to ${endTime})</span>`;
+            eventsList.appendChild(li);
+          }
+        });
+      } else {
+        eventsList.innerHTML = '<li>No events found for today.</li>';
+      }
+    }
+
+    function displayError(error) {
+      console.error(error); // Log the error for debugging
+      const eventsList = document.getElementById('events');
+      eventsList.innerHTML = `<li>Error fetching events: ${error.message}</li>`;
+    }
+
+    function resetCheckboxes() {
+      const checkboxes = document.querySelectorAll('#night-time-checklist input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.checked = false);
+    }
+
+    function checkAndResetCheckboxes() {
+      const now = new Date();
+      const hours = now.getHours();
+      if (hours >= 1 && hours < 2) {
+        resetCheckboxes();
+      }
+    }
+
+    // Refresh every 15 minutes
+    setInterval(fetchEvents, 900000);
+
+    // Check and reset checkboxes when the page loads
+    window.onload = function() {
+      fetchEvents();
+      checkAndResetCheckboxes();
+    };
+  </script>
+</head>
+<body>
+  <h1>Today's Events</h1>
+  <h2>Caregivers</h2>
+  <ul id="caregivers"></ul>
+  <h3>Other Events</h3>
+  <ul id="events"></ul>
+  <h3>Meals</h3>
+  <ul id="meals"></ul>
+  <h3>Night Time</h3>
+  <div id="night-time-checklist">
+    <div class="checklist-item">
+      <input type="checkbox" id="brush-teeth">
+      <label for="brush-teeth">Brush Teeth</label>
+    </div>
+    <div class="checklist-item">
+      <input type="checkbox" id="floss-teeth">
+      <label for="floss-teeth">Floss Teeth</label>
+    </div>
+    <div class="checklist-item">
+      <input type="checkbox" id="wash-face">
+      <label for="wash-face">Wash Face</label>
+    </div>
+    <div class="checklist-item">
+      <input type="checkbox" id="cream-on-face">
+      <label for="cream-on-face">Cream on Face</label>
+    </div>
+  </div>
+</body>
+</html>
