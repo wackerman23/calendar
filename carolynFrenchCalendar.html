@@ -121,18 +121,26 @@
       }
     }
 
+    function setDateTitle() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = now.toLocaleDateString(undefined, options);
+      document.getElementById('date-title').textContent = formattedDate;
+    }
+
     // Refresh every 15 minutes
     setInterval(fetchEvents, 900000);
 
-    // Check and reset checkboxes when the page loads
+    // Set date title and check and reset checkboxes when the page loads
     window.onload = function() {
+      setDateTitle();
       fetchEvents();
       checkAndResetCheckboxes();
     };
   </script>
 </head>
 <body>
-  <h1>Today's Events</h1>
+  <h1 id="date-title"></h1>
   <h2>Caregivers</h2>
   <ul id="caregivers"></ul>
   <h3>Activities and Appointments</h3>
