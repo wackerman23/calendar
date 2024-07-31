@@ -2,20 +2,21 @@
 <html>
 <head>
   <title>Today's Google Calendar Events</title>
-<style>
+  <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 15px; /* Reduced margin for tablet */
       background-color: #f9f9f9;
     }
     h1, h2, h3 {
       color: #333;
       border-bottom: 2px solid #ddd;
       padding-bottom: 5px;
+      font-size: 1.5em; /* Slightly increased font size for headers */
     }
     .caregiver {
       font-weight: bold;
-      font-size: 1.2em;
+      font-size: 1.3em; /* Slightly increased font size */
       color: #007BFF;
     }
     ul {
@@ -23,8 +24,8 @@
       padding: 0;
     }
     li {
-      margin: 10px 0;
-      padding: 10px;
+      margin: 8px 0;
+      padding: 12px; /* Slightly increased padding for better touch targets */
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -32,26 +33,43 @@
     .event-time {
       font-style: italic;
       color: #555;
+      font-size: 1.1em; /* Increased font size for better readability */
     }
     .checklist-item {
       display: flex;
       align-items: center;
-      margin: 10px 0;
-      padding: 10px;
+      margin: 8px 0;
+      padding: 12px; /* Increased padding for easier touch interaction */
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
     .checklist-item input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
+      width: 24px; /* Increased size for easier interaction */
+      height: 24px;
       margin-right: 10px;
       cursor: pointer;
     }
     .checklist-item label {
       margin: 0;
-      font-size: 2.0em; /* Increased font size */
+      font-size: 1.4em; /* Kept font size increased */
       cursor: pointer;
+    }
+
+    /* Media query for tablets (width between 600px and 1280px) */
+    @media (min-width: 600px) and (max-width: 1280px) {
+      body {
+        margin: 20px;
+      }
+      h1, h2, h3 {
+        font-size: 1.6em;
+      }
+      .caregiver {
+        font-size: 1.4em;
+      }
+      .event-time, .checklist-item label {
+        font-size: 1.5em; /* Further increased for better readability */
+      }
     }
   </style>
   <script>
