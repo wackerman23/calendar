@@ -5,18 +5,18 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 15px;
+      margin: 20px;
       background-color: #f9f9f9;
     }
     h1, h2, h3 {
       color: #333;
       border-bottom: 2px solid #ddd;
-      padding-bottom: 5px;
-      font-size: 1.5em;
+      padding-bottom: 10px;
+      font-size: 2em; /* Increased font size for headers */
     }
     .caregiver {
       font-weight: bold;
-      font-size: 1.3em;
+      font-size: 1.5em; /* Increased font size */
       color: #007BFF;
     }
     ul {
@@ -24,37 +24,38 @@
       padding: 0;
     }
     li {
-      margin: 8px 0;
-      padding: 12px;
+      margin: 10px 0;
+      padding: 15px;
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 4px;
+      font-size: 1.5em; /* Increased font size for list items */
     }
     .event-time-details {
       display: block;
-      font-size: 1em;
+      font-size: 1.2em; /* Increased font size */
       color: #555;
-      margin-top: 5px;
+      margin-top: 8px;
       font-style: italic;
     }
     .checklist-item {
       display: flex;
       align-items: center;
-      margin: 8px 0;
-      padding: 12px;
+      margin: 10px 0;
+      padding: 15px;
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
     .checklist-item input[type="checkbox"] {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
+      width: 30px; /* Increased size for better touch targets */
+      height: 30px;
+      margin-right: 15px;
       cursor: pointer;
     }
     .checklist-item label {
       margin: 0;
-      font-size: 2.0em;
+      font-size: 1.5em; /* Increased font size */
       cursor: pointer;
     }
   </style>
@@ -108,19 +109,19 @@
       const mealsList = document.getElementById('meals');
       mealsList.innerHTML = ''; // Clear existing meals
 
-      // Add Lunch and Dinner
+      // Add Lunch and Dinner with times on the same line
       const lunchLi = document.createElement('li');
-      lunchLi.innerHTML = `<span class="event-title">Lunch</span> <span class="event-time-details">(12:30 PM)</span>`;
+      lunchLi.innerHTML = `<span class="event-title">Lunch</span> (12:30 PM)`;
       mealsList.appendChild(lunchLi);
 
       const dinnerLi = document.createElement('li');
-      dinnerLi.innerHTML = `<span class="event-title">Dinner</span> <span class="event-time-details">(6:00 PM)</span>`;
+      dinnerLi.innerHTML = `<span class="event-title">Dinner</span> (6:00 PM)`;
       mealsList.appendChild(dinnerLi);
 
       if (events.length > 0) {
         events.forEach(event => {
-          const startTime = new Date(event.startTime).toLocaleTimeString();
-          const endTime = new Date(event.endTime).toLocaleTimeString();
+          const startTime = new Date(event.startTime).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+          const endTime = new Date(event.endTime).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
           if (event.title.startsWith('Caregiver:')) {
             const caregiverName = event.title.split('Caregiver:')[1].trim();
