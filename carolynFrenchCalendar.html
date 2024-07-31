@@ -90,10 +90,12 @@
 
   <script>
   async function fetchEvents() {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbzxH_Zcpe6rc6lRipPLLuzHEGYo-KhT1pYWcDrownQuOCdDa1C1Cfb3wSBncph_QtoUQQ/exec');
-    const events = await response.json();
-    displayRawEvents(events);
-  }
+  console.log('Fetching events at', new Date().toLocaleTimeString()); // Log the time of fetch
+  fetch('https://script.google.com/macros/s/AKfycbzxH_Zcpe6rc6lRipPLLuzHEGYo-KhT1pYWcDrownQuOCdDa1C1Cfb3wSBncph_QtoUQQ/exec')
+    .then(response => response.json())
+    .then(events => displayRawEvents(events))
+    .catch(error => console.error('Error fetching events:', error));
+}
 
   function displayRawEvents(events) {
     console.log(events); // Log the raw events for debugging
