@@ -30,16 +30,12 @@
       border: 1px solid #ddd;
       border-radius: 4px;
     }
-    .event-time {
-      font-style: italic;
-      color: #555;
-      font-size: 1.1em;
-    }
-    .event-date {
+    .event-time-details {
       display: block;
       font-size: 1em;
-      color: #888;
+      color: #555;
       margin-top: 5px;
+      font-style: italic;
     }
     .checklist-item {
       display: flex;
@@ -58,7 +54,7 @@
     }
     .checklist-item label {
       margin: 0;
-      font-size: 1.4em;
+      font-size: 2.0em;
       cursor: pointer;
     }
   </style>
@@ -114,18 +110,17 @@
 
       // Add Lunch and Dinner
       const lunchLi = document.createElement('li');
-      lunchLi.innerHTML = `<span class="event-title">Lunch</span> <span class="event-time">(12:30 PM)</span>`;
+      lunchLi.innerHTML = `<span class="event-title">Lunch</span> <span class="event-time-details">(12:30 PM)</span>`;
       mealsList.appendChild(lunchLi);
 
       const dinnerLi = document.createElement('li');
-      dinnerLi.innerHTML = `<span class="event-title">Dinner</span> <span class="event-time">(6:00 PM)</span>`;
+      dinnerLi.innerHTML = `<span class="event-title">Dinner</span> <span class="event-time-details">(6:00 PM)</span>`;
       mealsList.appendChild(dinnerLi);
 
       if (events.length > 0) {
         events.forEach(event => {
           const startTime = new Date(event.startTime).toLocaleTimeString();
           const endTime = new Date(event.endTime).toLocaleTimeString();
-          const date = new Date(event.startTime).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 
           if (event.title.startsWith('Caregiver:')) {
             const caregiverName = event.title.split('Caregiver:')[1].trim();
@@ -137,8 +132,7 @@
             const li = document.createElement('li');
             li.innerHTML = `
               <span class="event-title">${event.title}</span>
-              <span class="event-time">(${startTime} to ${endTime})</span>
-              <span class="event-date">Date: ${date}</span>
+              <span class="event-time-details">${startTime} to ${endTime}</span>
             `;
             eventsList.appendChild(li);
           }
