@@ -35,6 +35,12 @@
       color: #555;
       font-size: 1.1em;
     }
+    .event-date {
+      display: block;
+      font-size: 1em;
+      color: #888;
+      margin-top: 5px;
+    }
     .checklist-item {
       display: flex;
       align-items: center;
@@ -55,34 +61,34 @@
       font-size: 1.4em;
       cursor: pointer;
     }
-    .hidden {
-      display: none;
-    }
-    .page-buttons {
-      margin: 20px 0;
-    }
   </style>
 </head>
 <body>
   <h1 id="date-title"></h1>
   <h2>Caregivers</h2>
   <ul id="caregivers"></ul>
-
-  <div id="page-1">
-    <h3>Activities and Appointments</h3>
-    <ul id="events"></ul>
-    <h3>Meals</h3>
-    <ul id="meals"></ul>
-  </div>
-
-  <div id="page-2" class="hidden">
-    <h3>Activity Dates</h3>
-    <ul id="activity-dates"></ul>
-  </div>
-
-  <div class="page-buttons">
-    <button onclick="showPage(1)" id="btn-1">Next</button>
-    <button onclick="showPage(0)" id="btn-2" class="hidden">Back</button>
+  <h3>Activities and Appointments</h3>
+  <ul id="events"></ul>
+  <h3>Meals</h3>
+  <ul id="meals"></ul>
+  <h3>Night Time</h3>
+  <div id="night-time-checklist">
+    <div class="checklist-item">
+      <input type="checkbox" id="brush-teeth">
+      <label for="brush-teeth">Brush Teeth</label>
+    </div>
+    <div class="checklist-item">
+      <input type="checkbox" id="floss-teeth">
+      <label for="floss-teeth">Floss Teeth</label>
+    </div>
+    <div class="checklist-item">
+      <input type="checkbox" id="wash-face">
+      <label for="wash-face">Wash Face</label>
+    </div>
+    <div class="checklist-item">
+      <input type="checkbox" id="cream-on-face">
+      <label for="cream-on-face">Cream on Face</label>
+    </div>
   </div>
 
   <script>
@@ -98,9 +104,7 @@
       events.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
       const eventsList = document.getElementById('events');
-      const datesList = document.getElementById('activity-dates');
       eventsList.innerHTML = ''; // Clear existing events
-      datesList.innerHTML = ''; // Clear existing dates
 
       const caregiversList = document.getElementById('caregivers');
       caregiversList.innerHTML = ''; // Clear existing caregivers
@@ -131,36 +135,16 @@
             caregiversList.appendChild(caregiverLi);
           } else {
             const li = document.createElement('li');
-            li.innerHTML = `<span class="event-title">${event.title}</span> <span class="event-time">(${startTime} to ${endTime})</span>`;
+            li.innerHTML = `
+              <span class="event-title">${event.title}</span>
+              <span class="event-time">(${startTime} to ${endTime})</span>
+              <span class="event-date">Date: ${date}</span>
+            `;
             eventsList.appendChild(li);
-
-            const dateLi = document.createElement('li');
-            dateLi.innerHTML = `<span class="event-title">${event.title}</span> <span class="event-time">(${date})</span>`;
-            datesList.appendChild(dateLi);
           }
         });
       } else {
         eventsList.innerHTML = '<li>No events found for today.</li>';
-        datesList.innerHTML = '<li>No activity dates found.</li>';
-      }
-    }
-
-    function showPage(page) {
-      const page1 = document.getElementById('page-1');
-      const page2 = document.getElementById('page-2');
-      const btn1 = document.getElementById('btn-1');
-      const btn2 = document.getElementById('btn-2');
-
-      if (page === 1) {
-        page1.classList.add('hidden');
-        page2.classList.remove('hidden');
-        btn1.classList.add('hidden');
-        btn2.classList.remove('hidden');
-      } else {
-        page1.classList.remove('hidden');
-        page2.classList.add('hidden');
-        btn1.classList.remove('hidden');
-        btn2.classList.add('hidden');
       }
     }
 
