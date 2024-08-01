@@ -129,7 +129,7 @@
           const caregiverName = event.title.split('Caregiver:')[1].trim();
           const caregiverLi = document.createElement('li');
           caregiverLi.className = 'caregiver';
-          caregiverLi.textContent = caregiverName; // Display only the caregiver's name
+          caregiverLi.innerHTML = `${caregiverName} <span class="event-time-details">${startTime} to ${endTime}</span>`;
           caregiversList.appendChild(caregiverLi);
         } else {
           const li = document.createElement('li');
@@ -144,6 +144,7 @@
       eventsList.innerHTML = '<li>No events found for today.</li>';
     }
   }
+
 
   function setDateTitle() {
     const now = new Date();
