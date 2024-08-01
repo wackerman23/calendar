@@ -97,7 +97,7 @@
     .catch(error => console.error('Error fetching events:', error));
 }
 
-  function displayRawEvents(events) {
+function displayRawEvents(events) {
     console.log(events); // Log the raw events for debugging
 
     events.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
@@ -129,7 +129,7 @@
           const caregiverName = event.title.split('Caregiver:')[1].trim();
           const caregiverLi = document.createElement('li');
           caregiverLi.className = 'caregiver';
-          caregiverLi.innerHTML = `${caregiverName} <span class="event-time-details">${startTime} to ${endTime}</span>`;
+          caregiverLi.innerHTML = `${caregiverName} <span class="event-time-details">(${startTime} - ${endTime})</span>`;
           caregiversList.appendChild(caregiverLi);
         } else {
           const li = document.createElement('li');
@@ -144,6 +144,7 @@
       eventsList.innerHTML = '<li>No events found for today.</li>';
     }
   }
+
 
 
   function setDateTitle() {
