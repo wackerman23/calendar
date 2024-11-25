@@ -73,9 +73,9 @@
       <label for="brush-teeth">Brush Teeth</label>
     </div>
   </div>
-  <h3>Activities and Appointments</h3>
+  <h3>Appointments</h3>
   <ul id="events"></ul>
-  <h3>Meals</h3>
+  <h3>Vi Meals and Activities</h3>
   <ul id="meals"></ul>
   <h3>Night Time</h3>
   <div id="night-time-checklist">
@@ -121,13 +121,22 @@ function displayRawEvents(events) {
     mealsList.innerHTML = ''; // Clear existing meals
 
     // Add Lunch and Dinner with times on the same line
+    const activity = document.createElement('li');
+    activity.innerHTML = `<span class="event-title">Daily V Activity</span> (11:00 AM)`;
+    mealsList.appendChild(activity);
+  
     const lunchLi = document.createElement('li');
     lunchLi.innerHTML = `<span class="event-title">Lunch</span> (12:30 PM)`;
     mealsList.appendChild(lunchLi);
+  
+    const activity2 = document.createElement('li');
+    activity2.innerHTML = `<span class="event-title">Daily V Activity</span> (2:00 PM)`;
+    mealsList.appendChild(activity2);
 
     const dinnerLi = document.createElement('li');
     dinnerLi.innerHTML = `<span class="event-title">Dinner</span> (6:00 PM)`;
     mealsList.appendChild(dinnerLi);
+  
 
     if (events.length > 0) {
       events.forEach(event => {
