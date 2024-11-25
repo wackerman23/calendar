@@ -66,6 +66,12 @@
   <h1 id="date-title"></h1>
   <h2>Caregivers</h2>
   <ul id="caregivers"></ul>
+  <div id="day-time-checklist">
+    <div class="checklist-item">
+      <input type="checkbox" id="brush-teeth">
+      <label for="brush-teeth">Brush Teeth</label>
+    </div>
+  </div>
   <h3>Activities and Appointments</h3>
   <ul id="events"></ul>
   <h3>Meals</h3>
@@ -158,6 +164,8 @@ function displayRawEvents(events) {
 
   function resetChecklist() {
     const checkboxes = document.querySelectorAll('#night-time-checklist input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+    const checkboxes = document.querySelectorAll('#day-time-checklist input[type="checkbox"]');
     checkboxes.forEach(checkbox => checkbox.checked = false);
   }
 
